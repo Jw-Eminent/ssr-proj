@@ -9,6 +9,18 @@ const handle = app.getRequestHandler(); // 处理http请求
 //pages 页面加载完成之后，启动服务
 app.prepare().then(() => {
   const server = new Koa();
+  const router = new Router();
+
+  router.get('/page_2/:id', async (ctx) => {
+    const id = ctx.params.id;
+    await handle(ctx.req, ctx.res, {
+      pathname: '/page_2',
+      query: { id }
+    });
+    ctx.respond = false;
+  })
+
+  server.use(router.routes());
 
   server.use(async (ctx, next) => {
     await handle(ctx.req, ctx.res);

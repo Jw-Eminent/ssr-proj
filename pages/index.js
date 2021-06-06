@@ -1,3 +1,8 @@
-import { Button } from 'antd';
+export default () => {
 
-export default () => <Button>Hello World</Button>
+  return (
+    <>
+     <span>Index page</span>
+    </>
+  )
+}

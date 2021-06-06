@@ -35,3 +35,12 @@ async function test() {
   const keys = await redis.keys('*');
 }
 ```
+
+## Nextjs
+### 目录结构
+* pages目录下js文件对应一个页面，排除_app.js, _doucument.js
+* componnets目录 公用组件
+* lib目录 非组件性的公用代码
+* static目录 静态资源 图片 Icon等
+* .next next build出的内容
+* next.config.js 配置文件

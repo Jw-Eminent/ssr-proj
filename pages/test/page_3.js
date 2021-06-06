@@ -1,0 +1,1 @@
+export default () => <span>This is page 3</span>

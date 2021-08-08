@@ -1,7 +1,11 @@
 import App, { Container } from 'next/app';
+import { Provider } from 'react-redux';
+
 import 'antd/dist/antd.css';
 
 import Layout from '../components/Layout';
+
+import withRedux from '../lib/with-redux';
 
 /**
  * 自定义App的作用
@@ -26,15 +30,17 @@ class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps } = this.props; // Component 为当前渲染的组件
+    const { Component, pageProps, reduxStore } = this.props; // Component 为当前渲染的组件
     return (
       <Container>
         <Layout>
-          <Component {...pageProps} />
+          <Provider store={reduxStore}>
+            <Component {...pageProps} />
+          </Provider>
         </Layout>
       </Container>
     );
   }
 }
 
-export default MyApp;
+export default withRedux(MyApp);

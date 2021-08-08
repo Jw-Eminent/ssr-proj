@@ -44,3 +44,18 @@ async function test() {
 * static目录 静态资源 图片 Icon等
 * .next next build出的内容
 * next.config.js 配置文件
+
+### 服务端渲染流程
+* getInitialProps 在页面渲染前被执行；服务端渲染的时候执行，在客户端页面跳转的时候也会执行
+* 服务端流程：
+  *浏览器发起/page请求
+  *koa接收到请求，并调用nextjs
+  *nextjs开始渲染
+  *调用app的getInitialProps
+  *调用页面的getInitialProps
+  *渲染出最终的html
+* 客户端路由跳转
+  *点击链接按钮
+  *异步加载页面的组件js
+  *调用页面的getInitialProps
+  *数据返回，路由变化，页面渲染

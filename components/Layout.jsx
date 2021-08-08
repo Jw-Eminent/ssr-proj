@@ -16,12 +16,12 @@ function Layout({ children }) {
 
   return (
     <>
-      <header>
+      <div>
         <Link href="/page_2?id=1" as="/page_2/1">
           <Button>To Page_2</Button>
         </Link>
         <Button onClick={goPage3}>To Page_3</Button>
-      </header>
+      </div>
       { children }
     </>
   );

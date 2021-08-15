@@ -48,14 +48,32 @@ async function test() {
 ### 服务端渲染流程
 * getInitialProps 在页面渲染前被执行；服务端渲染的时候执行，在客户端页面跳转的时候也会执行
 * 服务端流程：
-  *浏览器发起/page请求
-  *koa接收到请求，并调用nextjs
-  *nextjs开始渲染
-  *调用app的getInitialProps
-  *调用页面的getInitialProps
-  *渲染出最终的html
+  * 浏览器发起/page请求
+  * koa接收到请求，并调用nextjs
+  * nextjs开始渲染
+  * 调用app的getInitialProps
+  * 调用页面的getInitialProps
+  * 渲染出最终的html
 * 客户端路由跳转
-  *点击链接按钮
-  *异步加载页面的组件js
-  *调用页面的getInitialProps
-  *数据返回，路由变化，页面渲染
+  * 点击链接按钮
+  * 异步加载页面的组件js
+  * 调用页面的getInitialProps
+  * 数据返回，路由变化，页面渲染
+
+### OAuth相关
+1. 跳转字段：
+    - client_id: 必需， github中注册生成
+    - scope： 希望得到的授权项 [相关文档](https://docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps)
+    - redirect_uri：跳转地址，需要和注册时的相同
+    - login
+    - state
+    - allow_signUp：是否允许用户注册
+2. 请求token
+    - client_id：必需
+    - client_secret：必需
+    - code：必需
+    - redirect_uri, state
+3. 如何保证安全
+    - 一次性code
+    - id + secret
+    - redirect_uri

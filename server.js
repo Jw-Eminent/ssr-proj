@@ -1,15 +1,31 @@
 const Koa = require('koa');
 const Router = require('koa-router');
 const next = require('next');
+const session = require('koa-session');
+const Redis = require('ioredis');
+
+const RedisSessionStore = require('./server/session-store');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler(); // 处理http请求
 
+// 创建Redis client
+const redis = new Redis();
+
 //pages 页面加载完成之后，启动服务
 app.prepare().then(() => {
   const server = new Koa();
   const router = new Router();
+
+  server.keys = ['Jw is eminent hhhh'];
+  const SESSION_CONFIG = {
+    key: 'jid',
+    // maxAge: 10 * 1000,
+    store: new RedisSessionStore(redis)
+  };
+
+  server.use(session(SESSION_CONFIG, server));
 
   router.get('/page_2/:id', async (ctx) => {
     const id = ctx.params.id;
@@ -18,7 +34,20 @@ app.prepare().then(() => {
       query: { id }
     });
     ctx.respond = false;
-  })
+  });
+
+  router.get('/set/user', async ctx => {
+    ctx.session.user = {
+      name: 'jwwang',
+      age: 18
+    };
+    ctx.body = 'set session success';
+  });
+
+  router.get('/delete/user', async ctx => {
+    ctx.session = null; // 设置ctx.session 为null，就会调用destroy方法
+    ctx.body = 'delete session success';
+  });
 
   server.use(router.routes());
 

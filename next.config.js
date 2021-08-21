@@ -1,5 +1,6 @@
 // nextjs 默认不支持css
 const withCss = require('@zeit/next-css');
+const config = require('./config');
 
 const configs = {
   // 编译文件的输出目录
@@ -51,5 +52,13 @@ const configs = {
 if (typeof require !== 'undefined') {
   require.extensions['.css'] = file => {};
 }
+const GITHUB_OAUTH_URL = 'https://github.com/login/oauth/authorize';
+const SCOPE = 'user';
 
-module.exports = withCss();
+module.exports = withCss({
+  publicRuntimeConfig: {
+    staticFolder: '/static',
+    GITHUB_OAUTH_URL,
+    OAUTH_URL: `${GITHUB_OAUTH_URL}?client_id=${config.github.client_id}&scope=${SCOPE}`
+  },
+});

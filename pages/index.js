@@ -1,15 +1,5 @@
-import { connect } from 'react-redux';
-
-const Index = (props) => {
+export default () => {
   return (
-    <>
-     <span>Index page {props.count}</span>
-    </>
-  )
+    <div>Index page</div>
+  );
 }
-
-const mapState = (state) => ({
-  count: state.count
-});
-
-export default connect(mapState)(Index);

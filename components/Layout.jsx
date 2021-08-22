@@ -2,9 +2,10 @@ import React, { useState, useCallback } from 'react';
 import { Button, Layout, Icon, Input, Avatar } from 'antd';
 import Link from 'next/link';
 import Router from 'next/router';
+import Container from './Container';
 import styled from 'styled-components';
 
-const Header = styled(Layout.Header)`
+const HeaderInner = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -39,7 +40,7 @@ const FooterTip = styled.h1`
 `;
 
 
-const { Content, Footer } = Layout;
+const { Header, Content, Footer } = Layout;
 
 export default ({ children }) => {
   const [search, setSearch] = useState('');
@@ -55,20 +56,24 @@ export default ({ children }) => {
   return (
     <Layout>
       <Header>
-        <HeaderLeft>
-          <Logo type="github" />
-          <InputSearch
-            value={search}
-            onChange={handleSearchChange}
-            onSearch={handleSearch}
-            placeholder="搜索仓库"
-          />
-        </HeaderLeft>
-        <HeaderRight>
-          <Avatar size={32} icon="user" />
-        </HeaderRight>
+        <Container renderer={<HeaderInner />}>
+          <HeaderLeft>
+            <Logo type="github" />
+            <InputSearch
+              value={search}
+              onChange={handleSearchChange}
+              onSearch={handleSearch}
+              placeholder="搜索仓库"
+            />
+          </HeaderLeft>
+          <HeaderRight>
+            <Avatar size={32} icon="user" />
+          </HeaderRight>
+        </Container>
       </Header>
-      <Content>{children}</Content>
+      <Content>
+        <Container>{children}</Container>
+      </Content>
       <Footer>
         <FooterTip>
           Develop by
@@ -82,6 +87,13 @@ export default ({ children }) => {
           }
           .ant-layout {
             height: 100%;
+          }
+          .ant-layout-header {
+            padding-left: 0;
+            padding-right: 0;
+          }
+          .ant-layout-content {
+            background: #fff;
           }
         `}
       </style>

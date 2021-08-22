@@ -41,22 +41,28 @@ app.prepare().then(() => {
   });
 
   // 增加获取用户信息接口
-  router.get('/api/user/info', async ctx => {
-    const user = ctx.session.userInfo;
-    if (!user) {
-      ctx.status = 401;
-      ctx.body = 'Need Login'
-    } else {
-      ctx.body = user;
-      ctx.set('Content-Type', 'application/json');
-    }
-  });
+  // router.get('/api/user/info', async ctx => {
+  //   const user = ctx.session.userInfo;
+  //   if (!user) {
+  //     ctx.status = 401;
+  //     ctx.body = 'Need Login'
+  //   } else {
+  //     ctx.body = user;
+  //     ctx.set('Content-Type', 'application/json');
+  //   }
+  // });
 
   server.use(router.routes());
 
   server.use(async (ctx, next) => {
+    ctx.res.session = ctx.session;
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
+  });
+
+  server.use(async (ctx, next) => {
+    ctx.res.statusCode = 200;
+    await next();
   });
 
   server.listen(3000, () => {
